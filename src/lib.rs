@@ -7,7 +7,7 @@ extern "C" {
     fn crypt(_: *const c_char, _: *const c_char) -> *const c_char;
 }
 
-fn c_crypt(password: &str, salt: &str) -> String {
+pub fn c_crypt(password: &str, salt: &str) -> String {
     unsafe {
         let hash = crypt(
             CString::new(password).unwrap().as_ptr() as *const c_char,
@@ -24,7 +24,7 @@ mod tests {
     use super::*;
 
     #[test]
-    fn c_crypt_test1() {
+    fn c_crypt_test() {
         assert_eq!(
             c_crypt("hello", "$6$salty"), 
             "$6$salty$DYOO4U869mvL5FZYB26Qk2JMtJJzLLbowdeqR50BjVVFcZMvZsEu9hICfEKtXe8q6JvoMlWZiUhNDG1wRaliq.".to_string());
